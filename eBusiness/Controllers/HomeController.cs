@@ -9,38 +9,15 @@ namespace eBusiness.Controllers
 {
     public class HomeController:Controller
     {
+        private readonly AppDbContext _context;
+
+        public HomeController(AppDbContext context)
+        {
+            _context = context;
+        }
         public ActionResult Index()
         {
-            List<Slider> sliders = new List<Slider>
-            {
-                new Slider()
-                {
-                    Id = 1,
-                    Order=1,
-                    Image = "1.jpg",
-                    Title = "The Best Business Information",
-                    Description = "We're In The Business Of Helping You Start Your Business",
-                    RedirectUrl = "https://www.google.com"
-                },
-                new Slider()
-                {
-                    Id = 2,
-                    Order = 2,
-                    Image = "2.jpg",
-                    Title = "At vero eos et accusamus",
-                    Description = "Helping Business Security & Peace of Mind for Your Family",
-                    RedirectUrl = "https://www.shazam.com"
-                },
-                new Slider()
-                {
-                    Id = 3,
-                    Order =3,
-                    Image = "3.jpg",
-                    Title = "Temporibus autem quibusdam",
-                    Description = "Beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem",
-                    RedirectUrl = "https://www.github.com"
-                }
-            };
+            List<Slider> sliders = _context.Sliders.OrderBy(x=>x.Order).ToList();
             return View(sliders);
         }
     }
